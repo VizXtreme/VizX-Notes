@@ -81,6 +81,7 @@ import io.github.fletchmckee.liquid.rememberLiquidState
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
+import androidx.compose.foundation.text.selection.SelectionContainer
 
 @Composable
 fun NoteDetailsScreen(
@@ -274,16 +275,18 @@ fun NoteDetailsScreen(
                 }
             }
             if (readingMode)
-                Markdown(
-                    content = content.withHardLineBreaks(),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 6.dp)
-                        .padding(8.dp)
-                        .liquefiable(liquidState),
-                    imageTransformer = Coil2ImageTransformerImpl,
-                    typography = defaultMarkdownTypography()
-                )
+                SelectionContainer {
+                    Markdown(
+                        content = content.withHardLineBreaks(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 6.dp)
+                            .padding(8.dp)
+                            .liquefiable(liquidState),
+                        imageTransformer = Coil2ImageTransformerImpl,
+                        typography = defaultMarkdownTypography()
+                    )
+                }
             else
                 OutlinedTextField(
                     value = content,
