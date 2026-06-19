@@ -13,7 +13,9 @@ val Rubik = FontFamily(
     Font(R.font.rubik_bold, FontWeight.Bold)
 )
 
-fun getTypography(font: FontFamily, fontSizeScale: Float = 1.0f) = Typography(
+fun getTypography(fontFamily: FontFamily, fontSizeScale: Float = 1.0f): Typography {
+    val font = if (fontFamily == FontFamily.Default) null else fontFamily
+    return Typography(
     bodyLarge = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = (16 * fontSizeScale).sp,
@@ -89,4 +91,4 @@ fun getTypography(font: FontFamily, fontSizeScale: Float = 1.0f) = Typography(
         fontSize = (12 * fontSizeScale).sp,
         fontFamily = font
     )
-)
+}
