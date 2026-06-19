@@ -91,4 +91,5 @@ fun getTypography(fontFamily: FontFamily, fontSizeScale: Float = 1.0f): Typograp
         fontSize = (12 * fontSizeScale).sp,
         fontFamily = font
     )
+    )
 }
