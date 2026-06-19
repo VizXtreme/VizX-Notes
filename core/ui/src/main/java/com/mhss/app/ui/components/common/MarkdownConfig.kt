@@ -39,8 +39,12 @@ fun String.withHardLineBreaks(): String = buildString(length + length / 2) {
             pendingBlanks++
         } else {
             if (!isFirst) {
-                appendLine()
-                if (pendingBlanks > 0) flushBlanks() else append('\n')
+                if (pendingBlanks > 0) {
+                    appendLine()
+                    flushBlanks()
+                } else {
+                    append("  \n")
+                }
             }
             isFirst = false
             append(content, i, eol)

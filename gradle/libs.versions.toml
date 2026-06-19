@@ -83,6 +83,7 @@ ktor-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation",
 squircle-shape = { group = "io.github.stoyan-vuchev", name = "squircle-shape", version.ref = "squircleShape" }
 markdown-renderer = { module = "com.mikepenz:multiplatform-markdown-renderer-m3", version.ref = "markdownRenderer" }
 markdown-coil2 = { module = "com.mikepenz:multiplatform-markdown-renderer-coil2", version.ref = "markdownRenderer" }
+markdown-code = { module = "com.mikepenz:multiplatform-markdown-renderer-code", version.ref = "markdownRenderer" }
 koog-agents = { module = "ai.koog:koog-agents", version.ref = "koog"}
 liquid = { module = "io.github.fletchmckee.liquid:liquid", version.ref = "liquid"}
 
@@ -97,7 +98,7 @@ kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.
 
 [bundles]
 koin = ["koin-core", "koin-annotations"]
-compose = ["compose-icons", "compose-ui", "compose-material", "androidx-navigation-compose", "compose-ui-tooling", "androidx-lifecycle-runtime-compose", "compose-ui-tooling-preview", "koin-androidx-compose", "markdown-renderer", "markdown-coil2"]
+compose = ["compose-icons", "compose-ui", "compose-material", "androidx-navigation-compose", "compose-ui-tooling", "androidx-lifecycle-runtime-compose", "compose-ui-tooling-preview", "koin-androidx-compose", "markdown-renderer", "markdown-coil2", "markdown-code"]
 androidx-glance = ["androidx-glance", "androidx-glance-appwidget", "androidx-glance-material", "androidx-glance-preview", "androidx-glance-appwidget-preview"]
 ktor-core = ["ktor-core", "ktor-serialization", "ktor-content-negotiation", "ktor-logging"]
 
