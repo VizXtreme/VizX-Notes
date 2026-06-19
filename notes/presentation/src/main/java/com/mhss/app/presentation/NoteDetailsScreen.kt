@@ -69,6 +69,7 @@ import com.mhss.app.presentation.components.GradientIconButton
 import com.mhss.app.presentation.components.ShareNoteAsPlainTextOption
 import com.mhss.app.ui.R
 import com.mhss.app.ui.components.common.MyBrainAppBar
+import com.mhss.app.ui.components.common.MarkdownVisualTransformation
 import com.mhss.app.ui.components.common.defaultMarkdownTypography
 import com.mhss.app.ui.components.common.withHardLineBreaks
 import com.mhss.app.ui.snackbar.LocalisedSnackbarHost
@@ -292,6 +293,7 @@ fun NoteDetailsScreen(
                         Text(text = stringResource(R.string.note_content))
                     },
                     shape = RoundedCornerShape(15.dp),
+                    visualTransformation = remember { MarkdownVisualTransformation() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
