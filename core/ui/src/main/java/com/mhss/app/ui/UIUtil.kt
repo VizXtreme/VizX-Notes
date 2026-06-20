@@ -1,7 +1,10 @@
 package com.mhss.app.ui
 
+import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.font.Typeface
+import java.io.File
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -54,23 +57,38 @@ fun Int.toNotesView(): ItemView {
     return ItemView.entries.first { it.value == this }
 }
 
-fun Int.toFontFamily(): FontFamily {
+fun Int.toFontFamily(context: Context? = null): FontFamily {
     return when (this) {
         0 -> FontFamily.Default
         1 -> Rubik
         2 -> FontFamily.Monospace
         3 -> FontFamily.SansSerif
+        4 -> {
+            if (context != null) {
+                val file = File(context.filesDir, "custom_font.ttf")
+                if (file.exists()) {
+                    try {
+                        val typeface = android.graphics.Typeface.createFromFile(file)
+                        FontFamily(Typeface(typeface))
+                    } catch (e: Exception) {
+                        FontFamily.Default
+                    }
+                } else FontFamily.Default
+            } else FontFamily.Default
+        }
         else -> FontFamily.Default
     }
 }
 
 fun FontFamily.toInt(): Int {
+    // Note: custom FontFamily created from Typeface doesn't match standard fonts.
+    // In SettingsScreen we use the saved Int directly. This is mainly for fallback.
     return when (this) {
         FontFamily.Default -> 0
         Rubik -> 1
         FontFamily.Monospace -> 2
         FontFamily.SansSerif -> 3
-        else -> 0
+        else -> 4
     }
 }
 
@@ -96,13 +114,25 @@ fun Int.getFontSizeName(): String {
 }
 
 @Composable
+fun Int.getFontName(): String {
+    return when (this) {
+        0 -> stringResource(R.string.font_system_default)
+        1 -> "Rubik"
+        2 -> "Monospace"
+        3 -> "Sans Serif"
+        4 -> "Custom"
+        else -> stringResource(R.string.font_system_default)
+    }
+}
+
+@Composable
 fun FontFamily.getName(): String {
     return when (this) {
         FontFamily.Default -> stringResource(R.string.font_system_default)
         Rubik -> "Rubik"
         FontFamily.Monospace -> "Monospace"
         FontFamily.SansSerif -> "Sans Serif"
-        else -> stringResource(R.string.font_system_default)
+        else -> "Custom"
     }
 }
 

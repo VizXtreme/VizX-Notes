@@ -20,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -118,10 +119,11 @@ fun MyBrainApp(
             }
         }
     }
+    val context = LocalContext.current
     MyBrainTheme(
         darkTheme = isDarkMode,
         useDynamicColors = useMaterialYou,
-        fontFamily = font.value.toFontFamily(),
+        fontFamily = font.value.toFontFamily(context),
         fontSizeScale = fontSize.value.toFontSizeScale()
     ) {
         val navController = rememberNavController()

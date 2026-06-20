@@ -4,6 +4,11 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import com.mhss.app.ui.getFontName
+import java.io.File
+import java.io.FileOutputStream
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -456,21 +461,32 @@ fun StartUpScreenSettingsItem(
                 }
             }
         }
-    }
-}
-
 @Composable
 fun AppFontSettingsItem(
     selectedFont: Int,
     onFontChange: (Int) -> Unit = {}
 ) {
+    val context = LocalContext.current
+    val filePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri ->
+        if (uri != null) {
+            try {
+                val inputStream = context.contentResolver.openInputStream(uri)
+                val file = File(context.filesDir, "custom_font.ttf")
+                val outputStream = FileOutputStream(file)
+                inputStream?.copyTo(outputStream)
+                inputStream?.close()
+                outputStream.close()
+                onFontChange(4)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     var expanded by remember { mutableStateOf(false) }
-    val fonts = listOf(
-        FontFamily.Default,
-        Rubik,
-        FontFamily.Monospace,
-        FontFamily.SansSerif
-    )
+    val fonts = listOf(0, 1, 2, 3, 4)
     SettingsItemCard(
         cornerRadius = 16.dp,
         onClick = {
@@ -498,7 +514,7 @@ fun AppFontSettingsItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    selectedFont.toFontFamily().getName(),
+                    selectedFont.getFontName(),
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Spacer(modifier = Modifier.width(4.dp))
@@ -508,14 +524,18 @@ fun AppFontSettingsItem(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
             ) {
-                fonts.forEach {
+                fonts.forEach { fontInt ->
                     DropdownMenuItem(onClick = {
-                        onFontChange(it.toInt())
                         expanded = false
+                        if (fontInt == 4) {
+                            filePickerLauncher.launch("*/*") // use */* to avoid file type restrictions
+                        } else {
+                            onFontChange(fontInt)
+                        }
                     },
                         text = {
                             Text(
-                                text = it.getName(),
+                                text = fontInt.getFontName(),
                                 style = MaterialTheme.typography.bodyLarge
                             )
                         })
