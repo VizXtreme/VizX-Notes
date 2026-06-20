@@ -461,6 +461,8 @@ fun StartUpScreenSettingsItem(
                 }
             }
         }
+    }
+}
 @Composable
 fun AppFontSettingsItem(
     selectedFont: Int,
